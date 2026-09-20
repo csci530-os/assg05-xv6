@@ -1,0 +1,26 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "snakemake all",
+            "type": "shell",
+            "command": "snakemake",
+            "args": [
+                "-c",
+                "1",
+                "all"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/slides"
+            },
+            "group": {
+                "kind": "build",
+            },
+            "presentation": {
+                "clear": true
+            }
+        }
+    ]
+}
+
+

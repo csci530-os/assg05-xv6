@@ -1,0 +1,5 @@
+wheel==0.40.0
+numpy
+pandas
+matplotlib
+scikit-learn

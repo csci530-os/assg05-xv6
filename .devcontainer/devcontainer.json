@@ -1,0 +1,46 @@
+{
+	"name": "Assignment xv6 RISCV / QEMU Environment",
+	"build": {
+		"dockerfile": "Dockerfile",
+		"context": ".",
+		"args": {
+			"PYTHON_ENV": "base",
+			"CONTAINER_WORKSPACE_FOLDER": "${containerWorkspaceFolder}",
+			"USERNAME": "student"
+			//"USERNAME": "${env:USER}"
+		}
+	},
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			// NOTE: the python environment needs to match the PYTHON_ENV passed into the Dockerfile that will be
+			// the name of the venv that is created and setup by the build			
+			"settings": {
+				"python.defaultInterpreterPath": "/opt/base/bin/python3",
+				"python.selectInterpreter": "/opt/base/bin/python3"
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-python.python",
+				"ms-vscode.cpptools",
+				"sunshaoce.risc-v"
+			]
+		}
+	},
+	// set hostname in container
+	"runArgs": [
+		"--hostname=assg05"
+	],
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	//"forwardPorts": [
+	//	8888
+	//],
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "python --version",
+	// "postStartCommand": "nohup bash -c 'jupyter lab --ip=0.0.0.0 --port=8888 --allow-root --NotebookApp.token=`` --NotebookApp.password=`` ' > nohup.out 2>&1",
+	// Set `remoteUser` to `root` to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "student"
+	//"remoteUser": "${env:USER}"
+}
