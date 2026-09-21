@@ -157,6 +157,9 @@ Some hints:
   and create a new page.  However, if the reference count is 1, it would be better
   to not make a copy, and to just modify the current only referenced physical
   page to now be writable.
+- I hadn't realized the purpose of the `read` parameter to `vmfault()` when
+  I talked about it in our video on xv6 lazy allocation.  But it is obviously
+  needed here to modify `vmfault()` for a write page fault request on a COW page.
 - An obvious place to initialize your cow reference count array is in `kinit()`.
   - You would want to initialize reference counts to 0, but note that 
     `freerange()` actually should decrement the count, so you should handle the
