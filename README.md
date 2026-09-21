@@ -33,7 +33,7 @@ more than one commit for a task if needed). In general, from the command line,
 you can create and push a commit by doing something like:
 
 ```bash
-$ git commit -am "My solution for Assignment 04 Task 02, backtrace"
+$ git commit -am "My solution for Assignment 05 Task 01, simple tests passing"
 $ git push
 ```
 
@@ -153,8 +153,26 @@ Some hints:
   RISC-V PTE for this.
 - `usertests -q` explores scenarios that `cowtest` does not test, so don't
   forget to check that all tests pass for both.
+- In `vmfault()` you would want to decrement the reference count when you make
+  and create a new page.  However, if the reference count is 1, it would be better
+  to not make a copy, and to just modify the current only referenced physical
+  page to now be writable.
+- An obvious place to initialize your cow reference count array is in `kinit()`.
+  - You would want to initialize reference counts to 0, but note that 
+    `freerange()` actually should decrement the count, so you should handle the
+    case so that `kinit()` frees the whole range, and afterwords all reference counts are 0.
+  - As mentioned, a simple array of integers is probably the easiest approach to
+    keep reference counts of the pages.  You might want to consider something like
+    a macro called `PA2COWREFIDX` or whatever is meaningful to you, that given a physical
+    address, returns the correct index, 0 to the total number of physical pages that
+    xv6 uses, of the page referencec count in your array.
+  - Likewise you probably want to declare the array in `kalloc.c`, and use `extern` declarations
+    in other files where you need to access it to increment or decrement the reference count.
 - Some helpful macros and definitions for page table flags are at the
   end of `kernel/riscv.h`.
+  - For example, you might want to use one of the RSW bits and define something like 
+    `PTE_C` or `PTE_COW`, and use this to keep track of pages that were writable, and
+    now need to be copied on write and the copy made writable.
 - If a COW page fault occurs and there's no free memory, the process
   should be killed.
 
